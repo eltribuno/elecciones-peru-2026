@@ -7,7 +7,6 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,300;9..144,600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
     --bg: #0d0e12;
     --surface: #16181f;
@@ -17,15 +16,15 @@
     --accent: #e8d5a3;
     --red: #e8503a;
   }
-
   body {
     background: var(--bg);
     color: var(--text);
     font-family: 'DM Mono', monospace;
     min-height: 100vh;
     padding: 2rem 1.5rem;
+    max-width: 860px;
+    margin: 0 auto;
   }
-
   .header {
     border-bottom: 1px solid var(--border);
     padding-bottom: 1.5rem;
@@ -36,57 +35,16 @@
     flex-wrap: wrap;
     gap: 1rem;
   }
-
-  .titulo-pais {
-    font-family: 'Fraunces', serif;
-    font-size: clamp(2rem, 6vw, 3.5rem);
-    font-weight: 300;
-    letter-spacing: -0.02em;
-    color: var(--text);
-    line-height: 1;
-  }
-
-  .titulo-año {
-    font-family: 'Fraunces', serif;
-    font-size: clamp(2rem, 6vw, 3.5rem);
-    font-weight: 600;
-    color: var(--accent);
-  }
-
-  .subtitulo {
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-top: 0.5rem;
-  }
-
-  .live-badge {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--red);
-  }
-
-  .live-dot {
-    width: 8px;
-    height: 8px;
-    background: var(--red);
-    border-radius: 50%;
-    animation: pulso 1.2s ease-in-out infinite;
-  }
-
-  @keyframes pulso {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.3; transform: scale(0.8); }
-  }
+  .titulo-pais { font-family: 'Fraunces', serif; font-size: clamp(2rem, 6vw, 3.2rem); font-weight: 300; color: var(--text); line-height: 1; }
+  .titulo-año  { font-family: 'Fraunces', serif; font-size: clamp(2rem, 6vw, 3.2rem); font-weight: 600; color: var(--accent); }
+  .subtitulo   { font-size: 11px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 6px; }
+  .live-badge  { display: flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red); }
+  .live-dot    { width: 8px; height: 8px; background: var(--red); border-radius: 50%; animation: pulso 1.2s ease-in-out infinite; }
+  @keyframes pulso { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.8)} }
 
   .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     gap: 1px;
     background: var(--border);
     border: 1px solid var(--border);
@@ -94,93 +52,82 @@
     overflow: hidden;
     margin-bottom: 2rem;
   }
+  .stat { background: var(--surface); padding: 1.1rem 1.25rem; }
+  .stat-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .stat-valor { font-size: 1.4rem; font-weight: 500; color: var(--accent); font-family: 'Fraunces', serif; }
+  .stat-sub   { font-size: 11px; color: var(--muted); margin-top: 4px; }
 
-  .stat {
-    background: var(--surface);
-    padding: 1.25rem 1.5rem;
-  }
-
-  .stat-label {
+  .seccion-titulo {
     font-size: 10px;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--muted);
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
   }
 
-  .stat-valor {
-    font-size: 1.5rem;
-    font-weight: 500;
-    color: var(--accent);
-    font-family: 'Fraunces', serif;
-  }
-
-  .stat-sub {
-    font-size: 11px;
-    color: var(--muted);
-    margin-top: 4px;
-  }
-
-  .candidatos-lista {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
+  .candidatos-lista { display: flex; flex-direction: column; gap: 5px; }
 
   .candidato {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 6px;
-    padding: 1rem 1.25rem;
+    padding: 0.9rem 1.1rem;
     transition: border-color 0.2s;
   }
-
   .candidato:hover { border-color: rgba(255,255,255,0.15); }
+  .candidato.top1  { border-color: rgba(232,213,163,0.3); }
+  .candidato.sin-votos { opacity: 0.35; }
 
   .candidato-header {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 8px;
+    align-items: flex-start;
+    margin-bottom: 10px;
     gap: 1rem;
   }
-
   .candidato-nombre {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 500;
     color: var(--text);
-    letter-spacing: 0.02em;
+    margin-bottom: 3px;
+    text-transform: capitalize;
   }
-
+  .candidato-partido {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
   .candidato-pct {
     font-family: 'Fraunces', serif;
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     font-weight: 600;
-    color: var(--accent);
     white-space: nowrap;
+    line-height: 1;
   }
-
-  .barra-fondo {
-    background: rgba(255,255,255,0.05);
-    border-radius: 3px;
-    height: 4px;
-    width: 100%;
-    overflow: hidden;
-  }
-
-  .barra-relleno {
-    height: 4px;
-    border-radius: 3px;
-    transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
+  .barra-fondo   { background: rgba(255,255,255,0.05); border-radius: 3px; height: 3px; width: 100%; overflow: hidden; }
+  .barra-relleno { height: 3px; border-radius: 3px; transition: width 1.4s cubic-bezier(0.4,0,0.2,1); }
   .candidato-votos {
     font-size: 10px;
     color: var(--muted);
-    margin-top: 6px;
-    letter-spacing: 0.03em;
+    margin-top: 7px;
+    display: flex;
+    justify-content: space-between;
   }
-
+  .badge-1er {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    background: rgba(232,213,163,0.15);
+    color: var(--accent);
+    padding: 2px 7px;
+    border-radius: 3px;
+    margin-left: 8px;
+    vertical-align: middle;
+    text-transform: uppercase;
+  }
   .footer {
     margin-top: 2rem;
     padding-top: 1rem;
@@ -191,66 +138,22 @@
     flex-wrap: wrap;
     gap: 0.5rem;
   }
-
-  .footer-fuente {
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
-  .footer-update {
-    font-size: 10px;
-    color: var(--muted);
-  }
-
-  .cargando {
-    text-align: center;
-    padding: 3rem;
-    color: var(--muted);
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .error {
-    background: rgba(232, 80, 58, 0.1);
-    border: 1px solid rgba(232, 80, 58, 0.3);
-    border-radius: 6px;
-    padding: 1rem 1.25rem;
-    font-size: 12px;
-    color: #e8503a;
-  }
-
-  .progress-ring {
-    width: 14px;
-    height: 14px;
-    border: 2px solid var(--border);
-    border-top-color: var(--accent);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 6px;
-  }
-
+  .footer-fuente { font-size: 10px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+  .footer-update { font-size: 10px; color: var(--muted); }
+  .cargando { text-align: center; padding: 3rem; color: var(--muted); font-size: 12px; letter-spacing: 0.08em; }
+  .progress-ring { width: 14px; height: 14px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; margin-right: 6px; }
   @keyframes spin { to { transform: rotate(360deg); } }
+  .error { background: rgba(232,80,58,.1); border: 1px solid rgba(232,80,58,.3); border-radius: 6px; padding: 1rem 1.25rem; font-size: 12px; color: #e8503a; }
 </style>
 </head>
 <body>
 
 <div class="header">
   <div>
-    <div>
-      <span class="titulo-pais">Perú </span>
-      <span class="titulo-año">2026</span>
-    </div>
-    <div class="subtitulo">Elecciones Generales — Resultados oficiales ONPE</div>
+    <div><span class="titulo-pais">Perú </span><span class="titulo-año">2026</span></div>
+    <div class="subtitulo">Elecciones Generales · Resultados oficiales ONPE · Primera vuelta</div>
   </div>
-  <div class="live-badge">
-    <span class="live-dot"></span>
-    En vivo
-  </div>
+  <div class="live-badge"><span class="live-dot"></span>En vivo</div>
 </div>
 
 <div class="stats-grid">
@@ -267,35 +170,88 @@
   <div class="stat">
     <div class="stat-label">Votos válidos</div>
     <div class="stat-valor" id="stat-votos-validos">—</div>
-    <div class="stat-sub" id="stat-pct-validos">del total emitido</div>
+    <div class="stat-sub">votos computados</div>
   </div>
   <div class="stat">
     <div class="stat-label">Próxima actualización</div>
     <div class="stat-valor" id="stat-cuenta">30s</div>
-    <div class="stat-sub">cada 30 segundos</div>
+    <div class="stat-sub">datos oficiales ONPE</div>
   </div>
 </div>
 
+<div class="seccion-titulo">Candidatos presidenciales — ordenados por votos válidos</div>
 <div class="candidatos-lista" id="contenido">
   <div class="cargando"><span class="progress-ring"></span>Consultando API de la ONPE...</div>
 </div>
 
 <div class="footer">
-  <div class="footer-fuente">Fuente: ONPE — resultadoelectoral.onpe.gob.pe</div>
+  <div class="footer-fuente">Fuente: ONPE · resultadoelectoral.onpe.gob.pe</div>
   <div class="footer-update" id="footer-hora">—</div>
 </div>
 
 <script>
-  const BASE_P = 'https://resultadoelectoral.onpe.gob.pe/presentacion-backend/resumen-general/participantes?idEleccion=15&tipoFiltro=eleccion';
+  // Color por partido — la API ya nos da el nombre del candidato
+  const COLORES = {
+    'RENOVACIÓN POPULAR':                                            '#E05A1E',
+    'PARTIDO DEL BUEN GOBIERNO':                                     '#1A5CA8',
+    'FUERZA POPULAR':                                                '#F5A623',
+    'AHORA NACIÓN - AN':                                             '#2E7D32',
+    'PARTIDO CÍVICO OBRAS':                                          '#7B1FA2',
+    'PARTIDO PAÍS PARA TODOS':                                       '#00838F',
+    'JUNTOS POR EL PERÚ':                                            '#C62828',
+    'PARTIDO APRISTA PERUANO':                                       '#B71C1C',
+    'PARTIDO SICREO':                                                '#4527A0',
+    'UNIDAD NACIONAL':                                               '#1565C0',
+    'PARTIDO MORADO':                                                '#6A1B9A',
+    'ALIANZA PARA EL PROGRESO':                                      '#E65100',
+    'PODEMOS PERÚ':                                                  '#0277BD',
+    'AVANZA PAÍS - PARTIDO DE INTEGRACIÓN SOCIAL':                   '#33691E',
+    'PARTIDO POLÍTICO NACIONAL PERÚ LIBRE':                          '#D32F2F',
+    'PRIMERO LA GENTE – COMUNIDAD, ECOLOGÍA, LIBERTAD Y PROGRESO':  '#00695C',
+    'PARTIDO FRENTE DE LA ESPERANZA 2021':                           '#37474F',
+    'PARTIDO DEMOCRÁTICO SOMOS PERÚ':                                '#1976D2',
+    'ALIANZA ELECTORAL VENCEREMOS':                                  '#388E3C',
+    'PARTIDO DEMÓCRATA VERDE':                                       '#558B2F',
+    'FRENTE POPULAR AGRÍCOLA FÍA DEL PERÚ':                         '#558B2F',
+    'PARTIDO POLÍTICO COOPERACIÓN POPULAR':                          '#F9A825',
+    'PARTIDO POLÍTICO INTEGRIDAD DEMOCRÁTICA':                       '#455A64',
+    'PARTIDO PATRIÓTICO DEL PERÚ':                                   '#BF360C',
+    'FE EN EL PERÚ':                                                 '#F57F17',
+    'FUERZA Y LIBERTAD':                                             '#880E4F',
+    'PARTIDO POLÍTICO PRIN':                                         '#4E342E',
+    'PROGRESEMOS':                                                   '#37474F',
+    'UN CAMINO DIFERENTE':                                           '#4E342E',
+    'LIBERTAD POPULAR':                                              '#1A237E',
+    'PARTIDO POLÍTICO PERÚ PRIMERO':                                 '#006064',
+    'PARTIDO POLÍTICO PERÚ ACCIÓN':                                  '#4A148C',
+    'PARTIDO DEMOCRÁTICO FEDERAL':                                   '#1B5E20',
+    'PARTIDO DEMÓCRATA UNIDO PERÚ':                                  '#5D4037',
+    'SALVEMOS AL PERÚ':                                              '#B71C1C',
+    'PERÚ MODERNO':                                                  '#0277BD',
+    'PARTIDO DE LOS TRABAJADORES Y EMPRENDEDORES PTE - PERÚ':       '#795548',
+  };
+
+  const coloresGenerico = ['#534AB7','#3B6D11','#185FA5','#993C1D','#5F5E5A','#BA7517','#0F6E56','#712B13'];
+  let colorIdx = 0;
+  function getColor(partido) {
+    if (COLORES[partido]) return COLORES[partido];
+    return coloresGenerico[colorIdx++ % coloresGenerico.length];
+  }
+
+  // Convierte "JUAN PABLO GARCIA" → "Juan Pablo Garcia"
+  function toTitleCase(str) {
+    return str.toLowerCase().replace(/\b\w/g, c => c.toUpperCase());
+  }
+
+  // APIs — idEleccion=10 es la presidencial (incluye nombreCandidato)
+  const BASE_P = 'https://resultadoelectoral.onpe.gob.pe/presentacion-backend/resumen-general/participantes?idEleccion=10&tipoFiltro=eleccion';
   const BASE_T = 'https://resultadoelectoral.onpe.gob.pe/presentacion-backend/resumen-general/totales?idEleccion=10&tipoFiltro=eleccion';
 
-  // Lista de proxies — se prueban en orden hasta que uno funcione
   const PROXIES = [
     u => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u),
     u => 'https://corsproxy.io/?' + encodeURIComponent(u),
     u => 'https://thingproxy.freeboard.io/fetch/' + u,
   ];
-  let proxyIdx = 0;
 
   function fetchConProxy(url, intento) {
     if (intento >= PROXIES.length) return Promise.reject(new Error('Todos los proxies fallaron'));
@@ -304,75 +260,48 @@
       .catch(() => fetchConProxy(url, intento + 1));
   }
 
-  function URL_PARTICIPANTES() { return fetchConProxy(BASE_P, 0); }
-  function URL_TOTALES()       { return fetchConProxy(BASE_T, 0); }
-
-  // Colores por partido
-  const coloresPartidos = {
-    'RENOVACIÓN POPULAR':        '#E05A1E',
-    'PARTIDO DEL BUEN GOBIERNO': '#1A5CA8',
-    'FUERZA POPULAR':            '#F5A623',
-    'AHORA NACIÓN - AN':         '#2E7D32',
-    'PARTIDO CÍVICO OBRAS':      '#7B1FA2',
-    'PARTIDO PAÍS PARA TODOS':   '#00838F',
-    'JUNTOS POR EL PERÚ':        '#C62828',
-    'PARTIDO APRISTA PERUANO':   '#B71C1C',
-    'PARTIDO SICREO':            '#4527A0',
-    'UNIDAD NACIONAL':           '#1565C0',
-  };
-
-  const coloresGenerico = ['#534AB7','#3B6D11','#185FA5','#993C1D','#5F5E5A','#BA7517','#0F6E56','#712B13'];
-  let colorIdx = 0;
-
-  function getColor(nombre) {
-    if (coloresPartidos[nombre]) return coloresPartidos[nombre];
-    const c = coloresGenerico[colorIdx % coloresGenerico.length];
-    colorIdx++;
-    return c;
-  }
-
   function dibujar(participantes, totales) {
-    // Stats
-    const contabilizadas = totales.contabilizadas || 0;
-    const totalActas     = totales.totalActas || 92766;
-    const pctActas       = totales.actasContabilizadas || 0;
-
-    document.getElementById('stat-contabilizadas').textContent = contabilizadas.toLocaleString('es-PE');
-    document.getElementById('stat-pct-actas').textContent      = pctActas.toFixed(3) + '% procesado';
-    document.getElementById('stat-total-actas').textContent    = totalActas.toLocaleString('es-PE');
+    document.getElementById('stat-contabilizadas').textContent = (totales.contabilizadas || 0).toLocaleString('es-PE');
+    document.getElementById('stat-pct-actas').textContent      = (totales.actasContabilizadas || 0).toFixed(3) + '% procesado';
+    document.getElementById('stat-total-actas').textContent    = (totales.totalActas || 92766).toLocaleString('es-PE');
     document.getElementById('stat-votos-validos').textContent  = (totales.totalVotosValidos || 0).toLocaleString('es-PE');
+    document.getElementById('footer-hora').textContent         = 'Actualizado: ' + new Date().toLocaleTimeString('es-PE');
 
-    // Hora de actualización
-    const ahora = new Date();
-    document.getElementById('footer-hora').textContent =
-      'Última actualización: ' + ahora.toLocaleTimeString('es-PE');
-
-    // Ordenar y filtrar
-    const sorted = [...participantes].sort((a, b) => b.porcentajeVotosValidos - a.porcentajeVotosValidos);
+    const sorted   = [...participantes].sort((a, b) => b.porcentajeVotosValidos - a.porcentajeVotosValidos);
     const conVotos = sorted.filter(p => p.totalVotosValidos > 0);
-    const lista = conVotos.length > 0 ? conVotos : sorted.slice(0, 15);
+    const sinVotos = sorted.filter(p => p.totalVotosValidos === 0);
+    const lista    = [...conVotos, ...sinVotos];
 
     colorIdx = 0;
     let html = '';
 
     lista.forEach((p, i) => {
-      const color = getColor(p.nombreAgrupacionPolitica);
-      const pct   = (p.porcentajeVotosValidos || 0).toFixed(2);
-      const ancho  = Math.max(p.porcentajeVotosValidos || 0, 0.3);
+      const color    = getColor(p.nombreAgrupacionPolitica);
+      const pct      = (p.porcentajeVotosValidos || 0).toFixed(2);
+      const esTop1   = i === 0 && p.totalVotosValidos > 0;
+      const sinV     = p.totalVotosValidos === 0;
+
+      // Nombre del candidato viene directo de la API — solo lo formateamos
+      const nombreCandidato = toTitleCase(p.nombreCandidato || '');
 
       html += `
-        <div class="candidato">
+        <div class="candidato ${esTop1 ? 'top1' : ''} ${sinV ? 'sin-votos' : ''}">
           <div class="candidato-header">
-            <span class="candidato-nombre">${p.nombreAgrupacionPolitica}</span>
-            <span class="candidato-pct">${pct}%</span>
+            <div>
+              <div class="candidato-nombre">
+                ${nombreCandidato}
+                ${esTop1 ? '<span class="badge-1er">1°</span>' : ''}
+              </div>
+              <div class="candidato-partido">${p.nombreAgrupacionPolitica}</div>
+            </div>
+            <div class="candidato-pct" style="color:${sinV ? 'var(--muted)' : color}">${pct}%</div>
           </div>
           <div class="barra-fondo">
             <div class="barra-relleno" id="b${i}" style="background:${color}; width:0%;"></div>
           </div>
           <div class="candidato-votos">
-            ${p.totalVotosValidos.toLocaleString('es-PE')} votos válidos
-            &nbsp;·&nbsp;
-            ${(p.porcentajeVotosEmitidos||0).toFixed(2)}% del total emitido
+            <span>${p.totalVotosValidos.toLocaleString('es-PE')} votos válidos</span>
+            <span>${(p.porcentajeVotosEmitidos || 0).toFixed(2)}% del total emitido</span>
           </div>
         </div>`;
     });
@@ -381,30 +310,25 @@
 
     setTimeout(() => {
       lista.forEach((p, i) => {
-        const ancho = Math.max(p.porcentajeVotosValidos || 0, 0.3);
         const el = document.getElementById('b' + i);
-        if (el) el.style.width = ancho + '%';
+        if (el) el.style.width = Math.max(p.porcentajeVotosValidos || 0, 0.2) + '%';
       });
-    }, 100);
+    }, 150);
   }
 
   function fetchTodo() {
-    Promise.all([
-      URL_PARTICIPANTES(),
-      URL_TOTALES()
-    ])
-    .then(([resP, resT]) => {
-      if (resP.success && resT.success) {
-        dibujar(resP.data, resT.data);
-      }
-    })
-    .catch(err => {
-      document.getElementById('contenido').innerHTML =
-        '<div class="error">No se pudo conectar con la ONPE: ' + err.message + '</div>';
-    });
+    Promise.all([fetchConProxy(BASE_P, 0), fetchConProxy(BASE_T, 0)])
+      .then(([resP, resT]) => {
+        if (resP.success && resT.success) dibujar(resP.data, resT.data);
+        else document.getElementById('contenido').innerHTML =
+          '<div class="error">La ONPE no devolvió datos válidos. Reintentando...</div>';
+      })
+      .catch(err => {
+        document.getElementById('contenido').innerHTML =
+          '<div class="error">No se pudo conectar con la ONPE: ' + err.message + '</div>';
+      });
   }
 
-  // Cuenta regresiva
   let seg = 30;
   setInterval(() => {
     seg--;
