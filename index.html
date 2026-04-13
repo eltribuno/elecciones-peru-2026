@@ -286,10 +286,26 @@
 </div>
 
 <script>
-  // Proxy para evitar el bloqueo CORS del navegador
-  const PROXY = 'https://corsproxy.io/?';
-  const URL_PARTICIPANTES = PROXY + encodeURIComponent('https://resultadoelectoral.onpe.gob.pe/presentacion-backend/resumen-general/participantes?idEleccion=15&tipoFiltro=eleccion');
-  const URL_TOTALES       = PROXY + encodeURIComponent('https://resultadoelectoral.onpe.gob.pe/presentacion-backend/resumen-general/totales?idEleccion=10&tipoFiltro=eleccion');
+  const BASE_P = 'https://resultadoelectoral.onpe.gob.pe/presentacion-backend/resumen-general/participantes?idEleccion=15&tipoFiltro=eleccion';
+  const BASE_T = 'https://resultadoelectoral.onpe.gob.pe/presentacion-backend/resumen-general/totales?idEleccion=10&tipoFiltro=eleccion';
+
+  // Lista de proxies — se prueban en orden hasta que uno funcione
+  const PROXIES = [
+    u => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u),
+    u => 'https://corsproxy.io/?' + encodeURIComponent(u),
+    u => 'https://thingproxy.freeboard.io/fetch/' + u,
+  ];
+  let proxyIdx = 0;
+
+  function fetchConProxy(url, intento) {
+    if (intento >= PROXIES.length) return Promise.reject(new Error('Todos los proxies fallaron'));
+    return fetch(PROXIES[intento](url))
+      .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .catch(() => fetchConProxy(url, intento + 1));
+  }
+
+  function URL_PARTICIPANTES() { return fetchConProxy(BASE_P, 0); }
+  function URL_TOTALES()       { return fetchConProxy(BASE_T, 0); }
 
   // Colores por partido
   const coloresPartidos = {
@@ -374,8 +390,8 @@
 
   function fetchTodo() {
     Promise.all([
-      fetch(URL_PARTICIPANTES).then(r => r.json()),
-      fetch(URL_TOTALES).then(r => r.json())
+      URL_PARTICIPANTES(),
+      URL_TOTALES()
     ])
     .then(([resP, resT]) => {
       if (resP.success && resT.success) {
